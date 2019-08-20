@@ -1,9 +1,9 @@
 import { Api } from "../../api";
 import authManager, { STORAGE_KEY_FOR_AUTH_DATA } from "../../api/authManager";
 import { POLYGON_DRAWING_STATE } from "../reducers/polygon";
-import { loginSuccess, loginBegin } from "./auth";
+import { loginSuccess, loginBegin, signupBegin, signupError, signupSuccess, loginError, logoutBegin, logoutSuccess, logoutError } from "./auth";
 import { drawPolygon, completePolygon } from './polygon';
-import { searchStart, searchComplete } from "./search";
+import { searchStart, searchComplete, searchError } from "./search";
 
 
 function newSearch() {
@@ -12,6 +12,9 @@ function newSearch() {
         dispatch(searchStart())
         Api.newSearch(polygon.vertices)
             .then(response => dispatch(searchComplete(response)))
+            .catch(reason => {
+                dispatch(searchError(reason))
+            })
     }
 }
 
@@ -33,23 +36,22 @@ export function mapClick(lat, lng) {
 
 export function checkLogin() {
     return (dispatch) => {
-        const serializedAuthData = localStorage.getItem(STORAGE_KEY_FOR_AUTH_DATA);
-        if(serializedAuthData) {
-            try{
-                const authData = JSON.parse(serializedAuthData);
-                dispatch(loginSuccess(authData))
-            } catch (err) {}    
-        }       
+        let authData = authManager.getAuthData()
+        if(authData) {
+            dispatch(loginSuccess(authData))
+        }
     }
 }
 
 export function attemptRegister(details){
     return (dispatch) => {
-        dispatch(loginBegin())
+        dispatch(signupBegin())
         Api.attemptRegister(details)
             .then(response => {
-                authManager.setAuthData(response)   
-                dispatch(loginSuccess(response))
+                dispatch(signupSuccess(response))
+            })
+            .catch(reason => {
+                dispatch(signupError(reason))
             })
     }   
 }
@@ -58,8 +60,19 @@ export function attemptLogin(credentials) {
     return dispatch => {
         dispatch(loginBegin())
         Api.attemptLogin(credentials).then(response => {
-            authManager.setAuthData(response)
             dispatch(loginSuccess(response))
         })
+        .catch(reason => {
+            dispatch(loginError(reason))
+        })
+    }
+}
+
+export function attemptLogout() {
+    return (dispatch) => {
+        dispatch(logoutBegin())
+        Api.attemptLogout()
+            .then(() => dispatch(logoutSuccess()))
+            .catch(reason => dispatch(logoutError(reason)))
     }
 }

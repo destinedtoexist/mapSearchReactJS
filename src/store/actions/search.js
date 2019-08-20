@@ -1,5 +1,8 @@
 export const SEARCH_START = 'search-start'
 export const SEARCH_COMPLETE = 'search-complete'
+export const SEARCH_ERROR = 'search-error'
+
+export const HIGHLIGHT_LISTING = 'highlight-listing'
 
 
 export function searchStart() {
@@ -8,9 +11,23 @@ export function searchStart() {
     }
 }
 
-export function searchComplete(response) {
+export function searchComplete(payload) {
     return {
         type: SEARCH_COMPLETE,
-        payload: response
+        payload
+    }
+}
+
+export function searchError(payload) {
+    return {
+        type: SEARCH_ERROR,
+        payload
+    }
+}
+
+export function highlightListing(payload) {
+    return {
+        type: HIGHLIGHT_LISTING,
+        payload
     }
 }

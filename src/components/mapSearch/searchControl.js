@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import Row from '../../elements/row';
 import Button from '../../elements/button';
-import { resetPolygon, drawingDone, startPolygon } from '../../store/actions';
+import { resetPolygon, drawingDone, startPolygon, attemptLogout } from '../../store/actions';
 import { POLYGON_DRAWING_STATE } from '../../store/reducers/polygon'
 import SnackBar from '../../elements/snackbar';
 
@@ -32,6 +32,7 @@ const SearchControl = ({position, drawing, vertices}) => {
                         {vertices.length < 3 ? 'Click on map to define bounding vertices' : 'Click done whenever you feel'}
                     </SnackBar>
                 }
+                <Button onClick={() => dispatch(attemptLogout())}>Logout</Button>
             </Row>
         </SearchControlContainer>
     )

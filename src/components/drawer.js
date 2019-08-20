@@ -34,10 +34,10 @@ const DrawerControl = styled.div`
 const DrawerContentWrapper = styled.div`
     position: absolute;
     top: 0;
-    left: 10px;
+    left: 0px;
     bottom: 0;
     right: 0;
-    background-color: inherit;
+    border-left: solid 1px rgba(0, 0, 0, 0.05);
 `
 
 const Drawer = ({children, show}) => {
@@ -49,7 +49,7 @@ const Drawer = ({children, show}) => {
 
     return (
         <DrawerContainer open={open}>
-            <DrawerControl onClick={(e) => setOpen(!open)}>{open && '>'}</DrawerControl>
+            <DrawerControl onClick={(e) => setOpen(!open)}></DrawerControl>
             <DrawerContentWrapper>
                 {children}
             </DrawerContentWrapper>
