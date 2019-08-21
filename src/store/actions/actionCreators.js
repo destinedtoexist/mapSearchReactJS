@@ -11,7 +11,9 @@ function newSearch() {
         const {polygon} = getState()
         dispatch(searchStart())
         Api.newSearch(polygon.vertices)
-            .then(response => dispatch(searchComplete(response)))
+            .then(response => {
+                dispatch(searchComplete(response))
+            })
             .catch(reason => {
                 dispatch(searchError(reason))
             })
