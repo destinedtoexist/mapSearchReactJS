@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import RelativeContainer from '../../elements/relativeContainer';
 import SearchResults from './searchResults';
-import MapContainer from './mapContainer';
 import SearchControl from './searchControl'
 import { SEARCH_REQUEST_STATE } from '../../store/reducers/search';
 import Spinner from '../spinner';
 import showNotification from '../../utils/showNotification';
+
+const MapContainer = React.lazy(() => import('./mapContainer'));
 
 export default () => {
     const [polygon, auth, search] = useSelector((state) => {
@@ -21,7 +22,9 @@ export default () => {
 
     return (
         <RelativeContainer>
-            <MapContainer  {...polygon} {...search} />
+            <Suspense fallback={<div>Loading...</div>}>
+                <MapContainer  {...polygon} {...search} />
+            </Suspense>
             {auth.loggedIn && <SearchControl position='bottom-left' {...polygon}    />}
             {auth.loggedIn && <SearchResults show={search.request===SEARCH_REQUEST_STATE.COMPLETED} {...search}/>}
             {search.request===SEARCH_REQUEST_STATE.STARTED && <Spinner>Loding</Spinner>}

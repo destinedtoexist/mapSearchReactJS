@@ -21,6 +21,14 @@ const MapContainer =  ({vertices, drawing, google, results, highlight}) => {
         setZoom(13)
     }, [])
 
+    useEffect(() => {
+        if(highlight) {
+            const {x, y} = results.listings.find(({id}) => id===highlight).coordinates
+            setCenter({lat: x, lng: y})
+            setZoom(zoom + 10/zoom)
+        }
+    }, [highlight])
+
     return (
             <Map google={google} onClick={handleClick} center={center} zoom={zoom}>
                 {drawing===POLYGON_DRAWING_STATE.ACTIVE &&
@@ -36,6 +44,7 @@ const MapContainer =  ({vertices, drawing, google, results, highlight}) => {
 
                 {results.listings.map(listing => (
                     <Marker key={listing.id} 
+                        onClick={(e) => dispatch(highlightListing(listing.id))}
                         position={{lat: listing.coordinates.x, lng: listing.coordinates.y}} />
                 ))}
 

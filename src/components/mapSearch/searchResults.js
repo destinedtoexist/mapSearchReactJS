@@ -33,16 +33,21 @@ const ResultCard = ({listing}) => {
 }
 
 const SearchResults = ({show, results}) => {
+
     return (
         <Drawer show={show}>
-            <ScrollWrapper>
-                <Title>Matching Results</Title>
-                <ResultWrapper>
-                    {results.listings.map(listing => (
-                        <ResultCard key={listing.id} listing={listing} />
-                    ))}
-                </ResultWrapper>
-            </ScrollWrapper>     
+            {results.listings && results.listings.length ? (
+                <ScrollWrapper>
+                    <Title>Matching Results</Title>
+                    <ResultWrapper>
+                        {results.listings.map(listing => (
+                            <ResultCard key={listing.id} listing={listing} />
+                        ))}
+                    </ResultWrapper>
+                </ScrollWrapper>
+            ) : (
+                <Title>No Results</Title>
+            )}
         </Drawer>
     )
 }

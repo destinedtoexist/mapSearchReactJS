@@ -13,6 +13,10 @@ const SearchControlContainer = styled.div`
     bottom: ${props => props.position && props.position.includes('bottom') ? '20px' : 'initial'};
     left: ${props => props.position && props.position.includes('left') ? '20px' : 'initial'};
     right: ${props => props.position && props.position.includes('top') ? '20px' : 'initial'};
+
+    button{
+        margin-right: 4px;
+    }
 `
 
 const SearchControl = ({position, drawing, vertices}) => {

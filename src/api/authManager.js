@@ -29,7 +29,7 @@ const authManager = {
     getAuthData: () => _authData || readFromLocalStorage(),
     getUser: () => _authData.user,
     setUser: (user) => setAuthData({...authData, user}),
-    getAuthHeader: () => _authData.authHeader,
+    getAuthHeader: () => _authData && _authData.authHeader,
     setAuthHeader: (authHeader) => {
         setAuthData({...authData, authHeader})
     }

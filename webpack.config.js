@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Dotenv = require('dotenv-webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = (env, argv) => {
     const isDevelopment = argv.mode==='development'
@@ -9,7 +10,10 @@ module.exports = (env, argv) => {
         mode: process.env.REACT_APP_ENV,
         plugins: [],
         node: { fs: 'empty' },
-        devtool: isDevelopment ? 'source-map' : ''
+        devtool: isDevelopment ? 'source-map' : '',
+        output: {
+            filename: '[name].[hash].bundle.js'
+        }
     };
 
     
@@ -22,7 +26,8 @@ module.exports = (env, argv) => {
     config.plugins = [
         htmlWebpackPlugin,
         miniCssExtractPlugin,
-        new Dotenv()
+        new Dotenv(),
+        new CleanWebpackPlugin(),
     ]
 
 
