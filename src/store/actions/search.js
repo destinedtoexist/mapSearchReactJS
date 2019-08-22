@@ -1,9 +1,15 @@
 export const SEARCH_START = 'search-start'
 export const SEARCH_COMPLETE = 'search-complete'
 export const SEARCH_ERROR = 'search-error'
+export const SEARCH_RESET = 'search-reset'
 
 export const HIGHLIGHT_LISTING = 'highlight-listing'
 
+export function searchReset() {
+    return {
+        type: SEARCH_RESET
+    }
+}
 
 export function searchStart() {
     return {

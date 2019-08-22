@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import Row from '../../elements/row';
 import Button from '../../elements/button';
-import { resetPolygon, drawingDone, startPolygon, attemptLogout } from '../../store/actions';
+import { resetPolygon, drawingDone, startPolygon, attemptLogout, drawingStart } from '../../store/actions';
 import { POLYGON_DRAWING_STATE } from '../../store/reducers/polygon'
 import SnackBar from '../../elements/snackbar';
 
@@ -26,7 +26,7 @@ const SearchControl = ({position, drawing, vertices}) => {
             <Row>
                 {(drawing===POLYGON_DRAWING_STATE.COMPLETE
                     || drawing===POLYGON_DRAWING_STATE.RESET)
-                     && <Button onClick={(e) => dispatch(startPolygon())}>Start</Button>}
+                     && <Button onClick={(e) => dispatch(drawingStart())}>Start</Button>}
                 {drawing===POLYGON_DRAWING_STATE.ACTIVE  && <Button disabled={vertices.length<3} onClick={(e) => dispatch(drawingDone())}>Done</Button>}
                 <Button disabled={drawing!==POLYGON_DRAWING_STATE.ACTIVE}  onClick={(e) => dispatch(resetPolygon())}>Reset</Button>
                 {drawing===POLYGON_DRAWING_STATE.RESET && <SnackBar>Click start to draw a region</SnackBar>}

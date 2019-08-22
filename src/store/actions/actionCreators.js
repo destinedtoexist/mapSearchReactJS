@@ -2,8 +2,8 @@ import { Api } from "../../api";
 import authManager, { STORAGE_KEY_FOR_AUTH_DATA } from "../../api/authManager";
 import { POLYGON_DRAWING_STATE } from "../reducers/polygon";
 import { loginSuccess, loginBegin, signupBegin, signupError, signupSuccess, loginError, logoutBegin, logoutSuccess, logoutError } from "./auth";
-import { drawPolygon, completePolygon } from './polygon';
-import { searchStart, searchComplete, searchError } from "./search";
+import { drawPolygon, completePolygon, startPolygon } from './polygon';
+import { searchStart, searchComplete, searchError, searchReset } from "./search";
 
 
 function newSearch() {
@@ -17,6 +17,13 @@ function newSearch() {
             .catch(reason => {
                 dispatch(searchError(reason))
             })
+    }
+}
+
+export function drawingStart() {
+    return (dispatch) => {
+        dispatch(startPolygon())
+        dispatch(searchReset())
     }
 }
 

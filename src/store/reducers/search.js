@@ -1,6 +1,7 @@
-import { SEARCH_START, SEARCH_COMPLETE, SEARCH_ERROR, HIGHLIGHT_LISTING } from "../actions";
+import { SEARCH_START, SEARCH_COMPLETE, SEARCH_ERROR, HIGHLIGHT_LISTING, SEARCH_RESET } from "../actions";
 
 export const SEARCH_REQUEST_STATE = {
+    RESET: 'reset',
     STARTED: 'started',
     COMPLETED: 'completed',
     ERROR: 'error'
@@ -8,6 +9,8 @@ export const SEARCH_REQUEST_STATE = {
 
 const search = (state = {results: {listings: []}}, action) => {
     switch(action.type) {
+        case SEARCH_RESET:
+            return {...state, request: SEARCH_REQUEST_STATE.RESET, results: {listings: []}}
         case SEARCH_START:
             return {...state, request: SEARCH_REQUEST_STATE.STARTED, error: null}
         case SEARCH_COMPLETE:
